@@ -12,5 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return "redireta para a página correta.";
 });
+
+Route::Resource('Asset', 'AssetController');

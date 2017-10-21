@@ -1,0 +1,109 @@
+@font-face {
+  font-family: 'VWHeadlineOT-Black';
+  src: url(../fonts/VW/VWHeadlineOT-Black.TTF)
+}
+
+@font-face {
+  font-family: 'VWHeadOffice-Regular';
+  src: url(../fonts/VW/VWHeadOffice-Regular.TTF)
+}
+
+@font-face {
+  font-family: 'VWTextOffice-Regular';
+  src: url(../fonts/VW/VWTextOffice-Regular.TTF)
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1b5b94;
+
+}
+::-webkit-scrollbar-thumb:window-inactive {
+  background: rgba(59, 115, 206, 0.4);
+}
+
+h1,h2,h3 {
+  font-family: 'VWHeadlineOT-Black';
+}
+
+h4,h5,h6,thead,th {
+  font-family: 'VWHeadlineOT-Semibold';
+}
+
+a,p,small,span,hr,ol,ul,li,br,tbody,tfoot,td,
+button,form,label,input,select,option,textarea {
+  font-family: 'VWTextOffice-Regular';
+}
+
+a, button {
+  cursor: pointer;
+}
+
+.bg-vw {
+  background: #1b5b94;
+}
+
+.vw-text {
+  color: #3b73ce;
+}
+
+a {
+  color: #4379d3;
+}
+
+a:hover {
+  color: #295bad;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #3b73ce;
+  border-color: #3b73ce;
+}
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: #3266bc;
+  border-color: #3266bc;
+}
+
+.btn-secondary {
+  color: #fff;
+  background-color: #3b73ce;
+  border-color: #3b73ce;
+}
+
+.btn-secondary.active, .btn-secondary:active,
+.show>.btn-secondary.dropdown-toggle {
+  color: #fff;
+  background-color: #3b73ce;
+  border-color: #3b73ce;
+}
+
+.btn-secondary:hover, .btn-secondary.active:hover,
+.btn-secondary.dropdown-toggle:hover {
+  color: #fff;
+  background-color: #3266bc;
+  border-color: #3266bc;
+}
+
+.breadcrumb {
+  background-color: rgba(50, 102, 198, 0.06);
+}
+
+.btn-outline-dark, .btn-outline-dark:active {
+    color: #3266bc;
+    background-color: transparent;
+    background-image: none;
+    border-color: #3266bc;
+}
+
+.btn-outline-dark:hover {
+    color: #fff;
+    background-image: none;
+    background-color: #3b73ce;
+    border-color: #3b73ce;
+}
