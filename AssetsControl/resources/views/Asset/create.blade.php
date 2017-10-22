@@ -90,7 +90,7 @@
               <button type="submit" class="btn btn-primary float-right" name="submit_form_one" value="1">Save</button>
             </form>
           </div>
-          <div class="tab-pane fade show active" id="multipleIP" role="tabpanel" aria-labelledby="nav-multipleIp">
+          <div class="tab-pane fade show" id="multipleIP" role="tabpanel" aria-labelledby="nav-multipleIp">
             <form action="{{ route('Asset.store') }}" method="post" name="form_two">
               {{csrf_field()}}
               <div class="row">
