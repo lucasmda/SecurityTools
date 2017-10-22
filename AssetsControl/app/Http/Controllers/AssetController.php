@@ -143,7 +143,8 @@ class AssetController extends Controller
   */
   public function show($id)
   {
-    //
+      $asset = Asset::find($id);
+      return view('Asset.show', compact('asset'));
   }
 
   /**
@@ -152,10 +153,15 @@ class AssetController extends Controller
   * @param  int  $id
   * @return \Illuminate\Http\Response
   */
-  public function edit()
-  {
-    return view('Asset.edit');
-  }
+  public function edit($id = null)
+    {
+      if(!isset($id)){
+        return view('Asset.edit');
+      }else{
+        $asset = Asset::find($id);
+        return view('Asset.editOne', compact('asset'));
+      }
+    }
 
   /**
   * Update the specified resource in storage.
@@ -164,9 +170,73 @@ class AssetController extends Controller
   * @param  int  $id
   * @return \Illuminate\Http\Response
   */
-  public function update(Request $request)
+  public function update(Request $request, $id = null)
   {
-    //
+      if(!isset($id)){
+        $wannacry = $request->wannacry ? $request->wannacry : null;
+        $doublepulsar = $request->doublepulsar ? $request->doublepulsar : null;
+        $vulneravel = $request->vulneravel ? $request->vulneravel : null;
+
+        if(!empty($wannacry)){
+          $stringWannacry = str_replace(array("\r\n","\r"),",",$wannacry);
+          $arrayWannacry = explode(",",$stringWannacry);
+
+          for ($i=0; $i < count($arrayWannacry); $i++) {
+            $asset = Asset::where('ip_address', '=', $arrayWannacry[$i])->get();
+
+            if(!$asset[0]->wannacry){
+              $asset[0]->wannacry = true;
+              $asset[0]->save();
+            }
+          }
+        }
+
+        if(!empty($doublepulsar)){
+          $stringDoublepulsar = str_replace(array("\r\n","\r"),",",$doublepulsar);
+          $arrayDoublepulsar = explode(",",$stringDoublepulsar);
+
+          for ($i=0; $i < count($arrayDoublepulsar); $i++) {
+            $asset = Asset::where('ip_address', '=', $arrayDoublepulsar[$i])->get();
+
+            if(!$asset[0]->doublepulsar){
+              $asset[0]->doublepulsar = true;
+              $asset[0]->save();
+            }
+          }
+        }
+
+        if(!empty($vulneravel)){
+          $stringVulneravel = str_replace(array("\r\n","\r"),",",$vulneravel);
+          $arrayVulneravel = explode(",",$stringVulneravel);
+
+          for ($i=0; $i < count($arrayVulneravel); $i++) {
+            $asset = Asset::where('ip_address', '=', $arrayVulneravel[$i])->get();
+
+            if(!$asset[0]->vulneravel){
+              $asset[0]->vulneravel = true;
+              $asset[0]->save();
+            }
+          }
+        }
+      }else{
+        $asset = Asset::find($id);
+        $asset->ip_address = $request->ip_address;
+        $asset->hostname = $request->hostname;
+        $asset->status = $request->status;
+        $asset->localidade = $request->localidade;
+        $asset->porta_sw = $request->porta_sw;
+        $asset->switch = $request->switch;
+        $asset->vlan_id = $request->vlan_id;
+        $asset->location = $request->location;
+        $asset->site = $request->site;
+        $asset->environment = $request->environment;
+        $asset->obs = $request->obs;
+        $asset->wannacry = isset($request->wannacry) ? 1 : 0;
+        $asset->doublepulsar = isset($request->doublepulsar) ? 1 : 0;
+        $asset->vulneravel = isset($request->vulneravel) ? 1 : 0;
+        $asset->save();
+      }
+      return back()->with('success', 'Asset '. $asset->ip_address .' updated.');
   }
 
   /**

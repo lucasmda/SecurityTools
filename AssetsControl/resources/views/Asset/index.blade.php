@@ -9,7 +9,7 @@
     Actions
   </a>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-    <a class="dropdown-item" href="{{ url('Asset/create') }}">Create new Asset Insertion</a>
+    <a class="dropdown-item" href="{{ url('Asset/create') }}">Create some new Assets</a>
     <a class="dropdown-item" href="{{ url('Asset/edit') }}">Edit some Assets</a>
   </div>
 </div>
@@ -49,7 +49,7 @@
           <tbody>
             @foreach($assets as $asset)
             <tr>
-              <td>{{$asset->ip_address}}</td>
+              <td><a href="{{route('Asset.show', $asset->id)}}">{{$asset->ip_address}}</a></td>
               <td>{{$asset->hostname}}</td>
               <td>{!!$asset->wannacry ? '<b class="text-danger">Sim</b>' : 'Não'!!}</td>
               <td>{!!$asset->doublepulsar ? '<b class="text-danger">Sim</b>' : 'Não'!!}</td>
