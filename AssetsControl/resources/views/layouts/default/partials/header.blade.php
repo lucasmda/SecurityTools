@@ -22,8 +22,9 @@
   <link rel="stylesheet" type="text/css" href="{{ asset('plugins/Animate.css/animate.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ asset('css/default.css') }}">
   @if(isset($datatables) && $datatables == true)
-  <link rel="stylesheet" type="text/css" href="{{ asset('plugins/DataTables/dataTables.bootstrap4.min.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ asset('plugins/DataTables/Responsive-2.1.1/css/responsive.dataTables.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/datatables/media/css/dataTables.bootstrap4.min.css') }}" >
+  <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.dataTables.min.css') }}" >
+  <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.dataTables.min.css') }}" >
   @endif
   <!-- Custom CSS -->
   @yield('customCSS')

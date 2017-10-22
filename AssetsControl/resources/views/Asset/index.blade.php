@@ -2,7 +2,6 @@
 @section('pageTitle') Assets @endsection
 @section('contentTitle') Assets @endsection
 @section('customCSS')
-<link rel="stylesheet" type="text/css" href="{{ asset('plugins/DataTables/dataTables.bootstrap4.min.css') }}">
 @endsection
 @section('subMenuRightActions')
 <div class="dropdown show float-right">
