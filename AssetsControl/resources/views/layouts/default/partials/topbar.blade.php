@@ -6,7 +6,7 @@
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="{{ url('/') }}">Assets</a>
+        <a class="nav-link" href="{{ url('/Asset') }}">Assets</a>
       </li>
     </ul>
     <div class="dropdown">

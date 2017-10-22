@@ -15,4 +15,6 @@ Route::get('/', function () {
     return "redireta para a página correta.";
 });
 
+Route::get('/Asset/edit', 'AssetController@edit');
+Route::post('/Asset/update', 'AssetController@update');
 Route::Resource('Asset', 'AssetController');

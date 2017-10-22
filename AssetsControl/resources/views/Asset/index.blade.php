@@ -10,6 +10,7 @@
   </a>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
     <a class="dropdown-item" href="{{ url('Asset/create') }}">Create new Asset Insertion</a>
+    <a class="dropdown-item" href="{{ url('Asset/edit') }}">Edit some Assets</a>
   </div>
 </div>
 @endsection
@@ -29,9 +30,11 @@
             <tr>
               <th>IP Address</th>
               <th>Hostname</th>
-              <th>Source</th>
-              <th>Status</th>
+              <th>WannaCry</th>
+              <th>DoublePulsar</th>
+              <th>Vulnerável</th>
               <th>Localidade</th>
+              <th>Status</th>
               <th>Porta SW</th>
               <th>Switch</th>
               <th>Vlan ID</th>
@@ -48,9 +51,11 @@
             <tr>
               <td>{{$asset->ip_address}}</td>
               <td>{{$asset->hostname}}</td>
-              <td>{{$asset->source}}</td>
-              <td>{{$asset->status}}</td>
+              <td>{!!$asset->wannacry ? '<b class="text-danger">Sim</b>' : 'Não'!!}</td>
+              <td>{!!$asset->doublepulsar ? '<b class="text-danger">Sim</b>' : 'Não'!!}</td>
+              <td>{!!$asset->vulneravel ? '<b class="text-danger">Sim</b>' : 'Não'!!}</td>
               <td>{{$asset->localidade}}</td>
+              <td>{{$asset->status}}</td>
               <td>{{$asset->porta_sw}}</td>
               <td>{{$asset->switch}}</td>
               <td>{{$asset->vlan_id}}</td>
@@ -63,6 +68,26 @@
             </tr>
             @endforeach
           </tbody>
+          <tfoot>
+            <tr>
+              <th>IP Address</th>
+              <th>Hostname</th>
+              <th>WannaCry</th>
+              <th>DoublePulsar</th>
+              <th>Vulnerável</th>
+              <th>Status</th>
+              <th>Localidade</th>
+              <th>Porta SW</th>
+              <th>Switch</th>
+              <th>Vlan ID</th>
+              <th>Location</th>
+              <th>Site</th>
+              <th>Environment</th>
+              <th>Observações</th>
+              <th>Created At</th>
+              <th>Updated At</th>
+            </tr>
+          </tfoot>
         </table>
       </div>
     </div>
@@ -78,9 +103,20 @@
       dom: 'Bfrtip',
       buttons: [
        'copy', 'excel', 'pdf'
-      ]
-    });
-} );
+     ],
+     initComplete: function () {
+       this.api().columns().every(function () {
+         var column = this;
+         var input = document.createElement("input");
+         input.setAttribute("Placeholder","Filter");
+         $(input).appendTo($(column.footer()).empty())
+         .on('keyup change', function () {
+           column.search($(this).val(), false, false, true).draw();
+         });
+       });
+    }
+  });
+});
 </script>
 
 @endsection
