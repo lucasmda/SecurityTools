@@ -14,7 +14,7 @@
     Actions
   </a>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-    <a class="dropdown-item" href="{{ route('Asset.edit', $asset->id) }}">Edit this Assets</a>
+    <a class="dropdown-item" href="{{ route('Asset.edit', $asset->id) }}">Edit this Asset</a>
   </div>
 </div>
 @endsection
@@ -37,6 +37,14 @@
                 <input type="text" class="form-control" id="hostname" name="hostname" placeholder="Hostname" value="{{old('hostname') ? old('hostname') : $asset->hostname}}" disabled>
               </div>
               <div class="form-group">
+                <label for="ping">Ping</label>
+                <input type="text" class="form-control" id="ping" name="ping" placeholder="Ping result" value="{{old('ping') ? old(ping) : $asset->ping}}" disabled>
+              </div>
+              <div class="form-group">
+                <label for="scan">Scan</label>
+                <input type="text" class="form-control" id="scan" name="scan" placeholder="Scan Date" value="{{old('scan') ? old(scan) : $asset->scan->format('d/m/Y')}}" disabled>
+              </div>
+              <div class="form-group">
                 <label for="status">Status</label>
                 <input type="text" class="form-control" id="status" name="status" placeholder="Status" value="{{old('status') ? old('status') : $asset->status}}" disabled>
               </div>
@@ -48,12 +56,27 @@
                 <label for="porta_sw">Porta SW</label>
                 <input type="text" class="form-control" id="porta_sw" name="porta_sw" placeholder="Porta SW" value="{{old('porta_sw') ? old('porta_sw') : $asset->porta_sw}}" disabled>
               </div>
+              <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" name="wannacry" id="wannacry" {{$asset->wannacry ? 'checked' : '' }} disabled> WannaCry
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" name="doublepulsar" id="doublepulsar" {{$asset->doublepulsar ? 'checked' : '' }} disabled> DoublePulsar
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                  <input class="form-check-input" type="checkbox" name="vulneravel" id="vulneravel" {{$asset->vulneravel ? 'checked' : '' }} disabled> Vulnerável
+                </label>
+              </div>
+            </div>
+            <div class="com-sm-12 col-md-6 col-lg-6">
               <div class="form-group">
                 <label for="switch">Switch</label>
                 <input type="text" class="form-control" id="switch" name="switch" placeholder="Switch" value="{{old('switch') ? old('switch') : $asset->switch}}" disabled>
               </div>
-            </div>
-            <div class="com-sm-12 col-md-6 col-lg-6">
               <div class="form-group">
                 <label for="vlan_id">VlanID</label>
                 <input type="text" class="form-control" id="vlan_id" name="vlan_id" placeholder="VlanID" value="{{old('vlan_id') ? old('vlan_id') : $asset->vlan_id}}" disabled>
@@ -73,21 +96,6 @@
               <div class="form-group">
                 <label for="obs">OBS</label>
                 <textarea class="form-control" id="obs" name="obs" placeholder="Observação" disabled>{{old('obs') ? old('obs') : $asset->obs}}</textarea>
-              </div>
-              <div class="form-check form-check-inline">
-                <label class="form-check-label">
-                  <input class="form-check-input" type="checkbox" name="wannacry" id="wannacry" {{$asset->wannacry ? 'checked' : '' }} disabled> WannaCry
-                </label>
-              </div>
-              <div class="form-check form-check-inline">
-                <label class="form-check-label">
-                  <input class="form-check-input" type="checkbox" name="doublepulsar" id="doublepulsar" {{$asset->doublepulsar ? 'checked' : '' }} disabled> DoublePulsar
-                </label>
-              </div>
-              <div class="form-check form-check-inline">
-                <label class="form-check-label">
-                  <input class="form-check-input" type="checkbox" name="vulneravel" id="vulneravel" {{$asset->vulneravel ? 'checked' : '' }} disabled> Vulnerável
-                </label>
               </div>
             </div>
           </div>

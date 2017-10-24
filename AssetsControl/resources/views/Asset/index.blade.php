@@ -9,8 +9,9 @@
     Actions
   </a>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-    <a class="dropdown-item" href="{{ url('Asset/create') }}">Create some new Assets</a>
-    <a class="dropdown-item" href="{{ url('Asset/edit') }}">Edit some Assets</a>
+    <a class="dropdown-item" href="{{ url('Asset/create') }}">Create new Assets</a>
+    <a class="dropdown-item" href="{{ url('Asset/edit') }}">Edit Assets</a>
+    <a class="dropdown-item" href="{{ url('Asset/search') }}">Search Networks</a>
   </div>
 </div>
 @endsection
@@ -29,12 +30,13 @@
           <thead>
             <tr>
               <th>IP Address</th>
-              <th>Hostname</th>
               <th>WannaCry</th>
               <th>DoublePulsar</th>
               <th>Vulnerável</th>
               <th>Localidade</th>
               <th>Status</th>
+              <th>Ping</th>
+              <th>Scan</th>
               <th>Porta SW</th>
               <th>Switch</th>
               <th>Vlan ID</th>
@@ -50,12 +52,13 @@
             @foreach($assets as $asset)
             <tr>
               <td><a href="{{route('Asset.show', $asset->id)}}">{{$asset->ip_address}}</a></td>
-              <td>{{$asset->hostname}}</td>
               <td>{!!$asset->wannacry ? '<b class="text-danger">Sim</b>' : 'Não'!!}</td>
               <td>{!!$asset->doublepulsar ? '<b class="text-danger">Sim</b>' : 'Não'!!}</td>
               <td>{!!$asset->vulneravel ? '<b class="text-danger">Sim</b>' : 'Não'!!}</td>
               <td>{{$asset->localidade}}</td>
               <td>{{$asset->status}}</td>
+              <td>{{$asset->ping}}</td>
+              <td>{{isset($asset->scan)? $asset->scan->format('d/m/Y') : ''}}</td>
               <td>{{$asset->porta_sw}}</td>
               <td>{{$asset->switch}}</td>
               <td>{{$asset->vlan_id}}</td>
@@ -71,11 +74,12 @@
           <tfoot>
             <tr>
               <th>IP Address</th>
-              <th>Hostname</th>
               <th>WannaCry</th>
               <th>DoublePulsar</th>
               <th>Vulnerável</th>
               <th>Status</th>
+              <th>Ping</th>
+              <th>Scan</th>
               <th>Localidade</th>
               <th>Porta SW</th>
               <th>Switch</th>
