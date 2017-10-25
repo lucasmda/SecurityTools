@@ -8,6 +8,9 @@
       <li class="nav-item">
         <a class="nav-link" href="{{ url('/Asset') }}">Assets</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url('/Import') }}">Import</a>
+      </li>
     </ul>
     <div class="dropdown">
 

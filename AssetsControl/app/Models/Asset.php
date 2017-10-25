@@ -7,15 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Asset extends Model
 {
 
-    protected $table = 'assets';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-      'id', 'ip_address', 'hostname', 'status','ping','scan', 'localidade', 'porta_sw', 'switch',
-      'vlan_id', 'location', 'site', 'environment', 'obs', 'wannacry', 'doublepulsar', 'vulneravel'
+      'id', 'ip_address', 'hostname', 'status_host','ping','scan', 'localidade', 'porta_sw', 'switch',
+      'vlan_id', 'location', 'site', 'environment', 'obs', 'wannacry', 'doublepulsar', 'vulneravel','status_remediation'
     ];
 
     protected $dates = [

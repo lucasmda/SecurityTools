@@ -2,6 +2,7 @@
 @section('pageTitle') Dashboard @endsection
 @section('contentTitle') Dashboard @endsection
 @section('customCSS')
+<link rel="stylesheet" href="{{asset('plugins/bootstrap-treeview-master/bootstrap-treeview.min.css')}}">
 @endsection
 
 @section('breadCumb')
@@ -26,7 +27,7 @@
           <tbody>
             @foreach($data['byStatus'] as $status)
             <tr>
-              <td>{{$status->status}}</td>
+              <td>{{isset($status->status_remediation) && $status->status_remediation != "" ? $status->status_remediation : 'Unknown'}}</td>
               <td>{{$status->amount}}</td>
             </tr>
             @endforeach
@@ -88,6 +89,13 @@
     </div>
   </div>
 </div>
+<div class="row">
+  <div class="col-sm-12 col-md-6 col-lg-6">
+    <div id="tree">
+
+    </div>
+  </div>
+</div>
 @endsection
 
 @section('customJS')
@@ -95,5 +103,9 @@
 <script src="{{ asset('plugins/HighCharts/js/modules/drilldown.js')}}" charset="utf-8"></script>
 <script src="{{ asset('plugins/HighCharts/js/modules/exporting.js') }}"></script>
 <script src="{{ asset('plugins/HighCharts/js/modules/data.js') }}"></script>
+<script src="{{ asset('plugins/bootstrap-treeview-master/bootstrap-treeview.min.js')}}" charset="utf-8"></script>
 <script src="{{asset('/js/home/index.js')}}" charset="utf-8"></script>
+<script type="text/javascript">
+  $('#tree').treeview({data: assets_control.tree});
+</script>
 @endsection

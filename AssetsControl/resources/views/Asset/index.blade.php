@@ -26,7 +26,9 @@
   <div class="col-sm-12 col-md-12 col-lg-12">
     <div class="card">
       <div class="card-body">
-        <table id="assetsTable" class="table table-hover" width="100%">
+        Last Scan: {{$maxScanDate->format('d/m/Y')}}
+        <br><br>
+        <table id="assetsTable" class="table table-hover table-sm" width="100%">
           <thead>
             <tr>
               <th>IP Address</th>
@@ -34,9 +36,10 @@
               <th>DoublePulsar</th>
               <th>Vulnerável</th>
               <th>Localidade</th>
-              <th>Status</th>
+              <th>Host Status</th>
+              <th>Remediation Status</th>
+              <th>Last Scan</th>
               <th>Ping</th>
-              <th>Scan</th>
               <th>Porta SW</th>
               <th>Switch</th>
               <th>Vlan ID</th>
@@ -56,9 +59,10 @@
               <td>{!!$asset->doublepulsar ? '<b class="text-danger">Sim</b>' : 'Não'!!}</td>
               <td>{!!$asset->vulneravel ? '<b class="text-danger">Sim</b>' : 'Não'!!}</td>
               <td>{{$asset->localidade}}</td>
-              <td>{{$asset->status}}</td>
-              <td>{{$asset->ping}}</td>
+              <td>{{$asset->status_host}}</td>
+              <td>{{$asset->status_remediation}}</td>
               <td>{{isset($asset->scan)? $asset->scan->format('d/m/Y') : ''}}</td>
+              <td>{{$asset->ping}}</td>
               <td>{{$asset->porta_sw}}</td>
               <td>{{$asset->switch}}</td>
               <td>{{$asset->vlan_id}}</td>
@@ -77,9 +81,10 @@
               <th>WannaCry</th>
               <th>DoublePulsar</th>
               <th>Vulnerável</th>
-              <th>Status</th>
+              <th>Host Status</th>
+              <th>Remediation Status</th>
+              <th>Last Scan</th>
               <th>Ping</th>
-              <th>Scan</th>
               <th>Localidade</th>
               <th>Porta SW</th>
               <th>Switch</th>

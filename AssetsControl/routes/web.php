@@ -19,3 +19,6 @@ Route::post('/Asset/search', 'AssetController@search_networks');
 Route::Resource('Asset', 'AssetController');
 Route::get('/get-subnet/{ip}', 'AssetController@get_localizacao');
 Route::get('/get-servers-vl/{vulnerability}/{location}', 'AssetController@get_servers_vl');
+
+Route::get('/Import', 'ImportController@index');
+Route::post('/Import/step-one', 'ImportController@import_ip_compare');

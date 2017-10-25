@@ -11,14 +11,20 @@ class HomeController extends Controller{
 
   public function index()
   {
-    $data['byStatus'] = DB::table('assets')->select('status', DB::raw('count(*) as amount'))->groupBy('status')->get();
+    $data['byStatus'] = DB::table('assets')->select('status_remediation', DB::raw('count(*) as amount'))->groupBy('status_remediation')->get();
     $data['byVulnerability']['WannaCry'] = DB::table('assets')->where('wannacry',1)->get();
     $data['byVulnerability']['DoublePulsar'] = DB::table('assets')->where('doublepulsar',1)->get();
     $data['byVulnerability']['Vulnerable'] = DB::table('assets')->where('vulneravel',1)->get();
-    $data['all'] = DB::table('assets')->select('ip_address','hostname','status','localidade','ping','wannacry','doublepulsar','vulneravel')->get();
+    $data['all'] = DB::table('assets')->select('ip_address','hostname','status_host','status_remediation','localidade','ping','wannacry','doublepulsar','vulneravel')->get();
     $drilldownCounts = [];
 
+    $tree = [];
+    $tree[0] = ['text' => 'WannaCry', 'icon' => 'fa fa-plus', 'selectedIcon' => 'fa fa-minus','nodes'=> []];
+    $tree[1] = ['text' => 'DoublePulsar', 'icon' => 'fa fa-plus', 'selectedIcon' => 'fa fa-minus','nodes'=> []];
+    $tree[2] = ['text' => 'Vulnerable', 'icon' => 'fa fa-plus', 'selectedIcon' => 'fa fa-minus','nodes'=> []];
+
     foreach ($data['byVulnerability']['WannaCry']->groupBy('localidade') as $key => $value) {
+      $tree[0]['nodes'][] = ['text'=>$key, 'nodes'=>[]];
       $drilldownCounts['WannaCry'][] = [$key, $value->count()];
     }
     foreach ($data['byVulnerability']['DoublePulsar']->groupBy('localidade') as $key => $value) {
@@ -70,7 +76,8 @@ class HomeController extends Controller{
 
     JavaScript::put([
       'series_vulnerabilities' => $seriesVulnerabilities,
-      'drilldown_vulnerabilities' => $drilldownVulnerabilities
+      'drilldown_vulnerabilities' => $drilldownVulnerabilities,
+      'tree' => $tree
     ]);
 
     return view('home.index', compact('data'))->with(['datatables' => true]);
