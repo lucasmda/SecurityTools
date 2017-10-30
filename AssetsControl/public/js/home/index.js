@@ -45,6 +45,78 @@ Highcharts.chart('vulnerabilities-locations-chart', {
 
 });
 
+
+Highcharts.chart('detection_history_chart', {
+  chart: {
+    type: 'spline'
+  },
+  credits:{
+    enabled: false
+  },
+  title: {
+    text: 'Detection History'
+  },
+  subtitle: {
+    text: 'History of detections along past days'
+  },
+
+  xAxis: {
+    categories: assets_control.date_range,
+    title: {
+      text: 'Dias'
+    },
+  },
+  yAxis: {
+    title: {
+      text: 'Ativos'
+    },
+    labels: {
+      formatter: function () {
+        return this.value;
+      }
+    }
+  },
+  tooltip: {
+    crosshairs: true,
+    shared: true
+  },
+  plotOptions: {
+    spline: {
+      marker: {
+        radius: 4,
+        lineColor: '#666666',
+        lineWidth: 1
+      }
+    }
+  },
+  series: [
+    {
+      name: 'WannaCry',
+      color: '#ff0000',
+      marker: {
+        symbol: 'triangle'
+      },
+      data:assets_control.detection_history.WannaCry
+    },
+    {
+    name: 'DoublePulsar',
+    color: '#336699',
+    marker: {
+      symbol: 'square'
+    },
+    data: assets_control.detection_history.DoublePulsar
+  }, {
+    name: 'Vulnerable',
+    color: '#ff6d00',
+    marker: {
+      symbol: 'circle'
+    },
+    data: assets_control.detection_history.Vulnerable
+  },
+]
+
+});
+
 function getServerList(vulnerability, location){
   // ServersTable.ajax.url(url + '/get-servers-vl/'+vulnerability+'/'+location).load();
   $.getJSON(url + '/get-servers-vl/'+vulnerability+'/'+location, function(response){

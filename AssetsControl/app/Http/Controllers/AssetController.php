@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\AssetHistory;
 use App\Utils\Getters;
 use App\Models\Asset;
 use Carbon\Carbon;
@@ -47,7 +46,6 @@ class AssetController extends Controller
 
       $this->validate($request, [
         'ip_address'      => 'required',
-        'reference_date'  => 'required'
       ]);
 
       $stored_asset = Asset::where('ip_address',$request->ip_address)->where('status', $request->status)->pluck('status');
@@ -66,7 +64,7 @@ class AssetController extends Controller
           [
             'ip_address' => $request->input('ip_address'),
             'hostname' => $request->input('hostname'),
-            'status' => $request->input('status'),
+            'status_remediation' => $request->input('status_remediation'),
             'ping' => $request->input('ping'),
             'scan' => isset($request->scan) ? Carbon::createFromFormat('d/m/Y', $request->input('scan'))->toDateString() : null,
             'localidade' => $request->input('localidade'),
@@ -80,28 +78,6 @@ class AssetController extends Controller
             'wannacry' => $request->input('wannacry'),
             'doublepulsar' => $request->input('doublepulsar'),
             'vulneravel' => $request->input('vulneravel')
-          ]
-        );
-
-        $asset_history = AssetHistory::updateOrCreate(
-          ['ip_address'=>$request->input('ip_address'), 'reference_date' => $request->input('reference_date')],
-          [
-            'ip_address'=>$request->input('ip_address'),
-            'hostname' => $request->input('hostname'),
-            'status' => $request->input('status'),
-            'ping' => $request->input('ping'),
-            'scan' => isset($request->scan) ? Carbon::createFromFormat('d/m/Y', $request->input('scan'))->toDateString() : null,
-            'localidade' => $request->input('localidade'),
-            'porta_sw' => $request->input('porta_sw'),
-            'switch' => $request->input('switch'),
-            'vlan_id' => $request->input('vlan_id') != '' ? $request->input('vlan_id') : null,
-            'location' => $request->input('location'),
-            'site' => $request->input('site'),
-            'environment' => $request->input('environment'),
-            'obs' => $request->input('obs'),
-            'wannacry' => $request->input('wannacry'),
-            'doublepulsar' => $request->input('doublepulsar'),
-            'vulneravel' => $request->input('vulneravel'),
           ]
         );
 
@@ -119,11 +95,11 @@ class AssetController extends Controller
       foreach ($lines as $line) {
         $data = explode("\t",$line);
         $ips[] = $data[0];
-        $stored_asset = Asset::where('ip_address',$data[0])->where('status', $data[2])->pluck('status');
+        $stored_asset = Asset::where('ip_address',$data[0])->where('status_remediation', $data[2])->pluck('status_remediation');
 
         if(isset($stored_asset[0]) && $stored_asset[0] == $data[2]){
           if($data[4] != ""){
-            Asset:: where('ip_address',$request->ip_address)->where('status', $request->status)->update(['scan' => Carbon::createFromFormat('d/m/Y', $data[4])->toDateString()]);
+            Asset:: where('ip_address',$request->ip_address)->where('status_remediation', $request->status)->update(['scan' => Carbon::createFromFormat('d/m/Y', $data[4])->toDateString()]);
           }else{
             continue;
           }
@@ -134,9 +110,9 @@ class AssetController extends Controller
             $asset = Asset::updateOrCreate(
               ['ip_address' => $data[0]],
               [
-                'status' =>  isset($data[2]) && $data[2] != "" ? $data[2] : null,
+                'status_remediation' =>  isset($data[2]) && $data[2] != "" ? $data[2] : null,
                 'ping' =>  isset($data[3]) && $data[3] != "" ? $data[3] : null,
-                'scan' => $data[4] != ""  ? Carbon::createFromFormat('d/m/Y', $data[4])->toDateString() : null,
+                'scan' => isset($data[4]) && $data[4] != ""  ? Carbon::createFromFormat('d/m/Y', $data[4])->toDateString() : null,
                 'localidade' =>  isset($data[5]) && $data[5] != "" ? $data[5] : null,
                 'porta_sw' =>  isset($data[6]) && $data[6] != "" ? $data[6] : null,
                 'switch' =>  isset($data[7]) && $data[7] != "" ? $data[7] : null,
@@ -148,33 +124,15 @@ class AssetController extends Controller
                 'wannacry' =>  1
               ]
             );
-            $asset_history = AssetHistory::updateOrCreate(
-              ['ip_address'=>$data[0], 'reference_date' => $request->input('reference_date')],
-              [
-                'ip_address'=>$data[0],
-                'status' =>  isset($data[2]) && $data[2] != "" ? $data[2] : null,
-                'ping' =>  isset($data[3]) && $data[3] != "" ? $data[3] : null,
-                'scan' => $data[4] != ""  ? Carbon::createFromFormat('d/m/Y', $data[4])->toDateString() : null,
-                'localidade' =>  isset($data[5]) && $data[5] != "" ? $data[5] : null,
-                'porta_sw' =>  isset($data[6]) && $data[6] != "" ? $data[6] : null,
-                'switch' =>  isset($data[7]) && $data[7] != "" ? $data[7] : null,
-                'vlan_id' => $data[8] != '' ? $data[8] : null,
-                'location' =>  isset($data[9]) && $data[9] != "" ? $data[9] : null,
-                'site' =>  isset($data[10]) && $data[10] != "" ? $data[10] : null,
-                'environment' =>  isset($data[11]) && $data[11] != "" ? $data[11] : null,
-                'obs' => isset($data[12]) && $data[12] != "" ? $data[12] : null,
-                'wannacry' =>  1,
-                'reference_date' =>  $request->input('reference_date')
-              ]
-            );
+
             break;
             case 'DoublePulsar':
             $asset = Asset::updateOrCreate(
               ['ip_address' => $data[0]],
               [
-                'status' =>  isset($data[2]) && $data[2] != "" ? $data[2] : null,
+                'status_remediation' =>  isset($data[2]) && $data[2] != "" ? $data[2] : null,
                 'ping' =>  isset($data[3]) && $data[3] != "" ? $data[3] : null,
-                'scan' => $data[4] != ""  ? Carbon::createFromFormat('d/m/Y', $data[4])->toDateString() : null,
+                'scan' => isset($data[4]) && $data[4] != ""  ? Carbon::createFromFormat('d/m/Y', $data[4])->toDateString() : null,
                 'localidade' =>  isset($data[5]) && $data[5] != "" ? $data[5] : null,
                 'porta_sw' =>  isset($data[6]) && $data[6] != "" ? $data[6] : null,
                 'switch' =>  isset($data[7]) && $data[7] != "" ? $data[7] : null,
@@ -186,33 +144,15 @@ class AssetController extends Controller
                 'doublepulsar' =>  1,
               ]
             );
-            $asset_history = AssetHistory::updateOrCreate(
-              ['ip_address'=>$data[0], 'reference_date' => $request->input('reference_date')],
-              [
-                'ip_address'=>$data[0],
-                'status' =>  isset($data[2]) && $data[2] != "" ? $data[2] : null,
-                'ping' =>  isset($data[3]) && $data[3] != "" ? $data[3] : null,
-                'scan' => $data[4] != ""  ? Carbon::createFromFormat('d/m/Y', $data[4])->toDateString() : null,
-                'localidade' =>  isset($data[5]) && $data[5] != "" ? $data[5] : null,
-                'porta_sw' =>  isset($data[6]) && $data[6] != "" ? $data[6] : null,
-                'switch' =>  isset($data[7]) && $data[7] != "" ? $data[7] : null,
-                'vlan_id' => $data[8] != '' ? $data[8] : null,
-                'location' =>  isset($data[9]) && $data[9] != "" ? $data[9] : null,
-                'site' =>  isset($data[10]) && $data[10] != "" ? $data[10] : null,
-                'environment' =>  isset($data[11]) && $data[11] != "" ? $data[11] : null,
-                'obs' => isset($data[12]) && $data[12] != "" ? $data[12] : null,
-                'doublepulsar' =>  1,
-                'reference_date' =>  $request->input('reference_date')
-              ]
-            );
+
             break;
             case 'vulnerável' || 'Vulnerabilidades':
             $asset = Asset::updateOrCreate(
               ['ip_address' => $data[0]],
               [
-                'status' =>  isset($data[2]) && $data[2] != "" ? $data[2] : null,
+                'status_remediation' =>  isset($data[2]) && $data[2] != "" ? $data[2] : null,
                 'ping' =>  isset($data[3]) && $data[3] != "" ? $data[3] : null,
-                'scan' => $data[4] != ""  ? Carbon::createFromFormat('d/m/Y', $data[4])->toDateString() : null,
+                'scan' => isset($data[4]) && $data[4] != ""  ? Carbon::createFromFormat('d/m/Y', $data[4])->toDateString() : null,
                 'localidade' =>  isset($data[5]) && $data[5] != "" ? $data[5] : null,
                 'porta_sw' =>  isset($data[6]) && $data[6] != "" ? $data[6] : null,
                 'switch' =>  isset($data[7]) && $data[7] != "" ? $data[7] : null,
@@ -224,25 +164,7 @@ class AssetController extends Controller
                 'vulneravel' => 1
               ]
             );
-            $asset_history = AssetHistory::updateOrCreate(
-              ['ip_address'=>$data[0], 'reference_date' => $request->input('reference_date')],
-              [
-                'ip_address'=>$data[0],
-                'status' =>  isset($data[2]) && $data[2] != "" ? $data[2] : null,
-                'ping' =>  isset($data[3]) && $data[3] != "" ? $data[3] : null,
-                'scan' => $data[4] != ""  ? Carbon::createFromFormat('d/m/Y', $data[4])->toDateString() : null,
-                'localidade' =>  isset($data[5]) && $data[5] != "" ? $data[5] : null,
-                'porta_sw' =>  isset($data[6]) && $data[6] != "" ? $data[6] : null,
-                'switch' =>  isset($data[7]) && $data[7] != "" ? $data[7] : null,
-                'vlan_id' => $data[8] != '' ? $data[8] : null,
-                'location' =>  isset($data[9]) && $data[9] != "" ? $data[9] : null,
-                'site' =>  isset($data[10]) && $data[10] != "" ? $data[10] : null,
-                'environment' =>  isset($data[11]) && $data[11] != "" ? $data[11] : null,
-                'obs' => isset($data[12]) && $data[12] != "" ? $data[12] : null,
-                'vulneravel' =>  1,
-                'reference_date' =>  $request->input('reference_date')
-              ]
-            );
+
             break;
           }
         }
@@ -341,7 +263,7 @@ class AssetController extends Controller
       $asset = Asset::find($id);
       $asset->ip_address = $request->ip_address;
       $asset->hostname = $request->hostname;
-      $asset->status = $request->status;
+      $asset->status_remediation = $request->status_remediation;
       $asset->localidade = $request->localidade;
       $asset->porta_sw = $request->porta_sw;
       $asset->switch = $request->switch;

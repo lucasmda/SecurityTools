@@ -41,8 +41,8 @@
                     <input type="text" class="form-control" id="scan" name="scan" placeholder="Scan Date" value="{{old('scan')}}">
                   </div>
                   <div class="form-group">
-                    <label for="status">Status</label>
-                    <input type="text" class="form-control" id="status" name="status" placeholder="Status" value="{{old('status')}}">
+                    <label for="status_remediation">Status</label>
+                    <input type="text" class="form-control" id="status_remediation" name="status_remediation" placeholder="Remediation Status" value="{{old('status_remediation')}}">
                   </div>
                   <div class="form-group">
                     <label for="localidade">Localidade</label>
@@ -52,21 +52,7 @@
                     <label for="porta_sw">Porta SW</label>
                     <input type="text" class="form-control" id="porta_sw" name="porta_sw" placeholder="Porta SW" value="{{old('porta_sw')}}">
                   </div>
-                  <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                      <input class="form-check-input" type="checkbox" name="wannacry" id="wannacry" value="1"> WannaCry
-                    </label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                      <input class="form-check-input" type="checkbox" name="doublepulsar" id="doublepulsar" value="1"> DoublePulsar
-                    </label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                      <input class="form-check-input" type="checkbox" name="vulneravel" id="vulneravel" value="1"> Vulnerável
-                    </label>
-                  </div>
+
                 </div>
                 <div class="com-sm-12 col-md-6 col-lg-6">
                   <div class="form-group">
@@ -93,9 +79,20 @@
                     <label for="obs">OBS</label>
                     <textarea class="form-control" id="obs" name="obs" placeholder="Observação">{{old('obs')}}</textarea>
                   </div>
-                  <div class="form-group">
-                    <label for="reference_date">Reference Date</label>
-                    <input type="date" class="form-control" id="reference_date" name="reference_date" placeholder="Reference Date (YYYY-MM-DD)" value="{{old('reference_date')}}">
+                  <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                      <input class="form-check-input" type="checkbox" name="wannacry" id="wannacry" value="1"> WannaCry
+                    </label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                      <input class="form-check-input" type="checkbox" name="doublepulsar" id="doublepulsar" value="1"> DoublePulsar
+                    </label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                      <input class="form-check-input" type="checkbox" name="vulneravel" id="vulneravel" value="1"> Vulnerável
+                    </label>
                   </div>
                 </div>
               </div>
@@ -110,12 +107,6 @@
                   <div class="form-group">
                     <label for="full_data">Full Data</label>
                     <textarea rows="9" class="form-control" id="full_data" name="full_data" placeholder="Data from Excel" value="{{old('full_data')}}"></textarea>
-                  </div>
-                  <div class="form-group">
-                    <div class="form-group">
-                      <label for="reference_date">Reference Date</label>
-                      <input type="date" class="form-control" id="reference_date" name="reference_date" placeholder="Reference Date (YYYY-MM-DD)" value="{{old('reference_date')}}">
-                    </div>
                   </div>
                   <button type="submit" class="btn btn-primary float-right" name="submit_form_two" value="1">Save</button>
                 </div>

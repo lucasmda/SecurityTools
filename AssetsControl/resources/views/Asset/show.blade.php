@@ -45,8 +45,8 @@
                 <input type="text" class="form-control" id="scan" name="scan" placeholder="Scan Date" value="{{old('scan') ? old(scan) : $asset->scan->format('d/m/Y')}}" disabled>
               </div>
               <div class="form-group">
-                <label for="status">Status</label>
-                <input type="text" class="form-control" id="status" name="status" placeholder="Status" value="{{old('status') ? old('status') : $asset->status}}" disabled>
+                <label for="status_remediation">Status</label>
+                <input type="text" class="form-control" id="status_remediation" name="status_remediation" placeholder="Remediation Status" value="{{old('status_remediation') ? old('status_remediation') : $asset->status_remediation}}" disabled>
               </div>
               <div class="form-group">
                 <label for="localidade">Localidade</label>
