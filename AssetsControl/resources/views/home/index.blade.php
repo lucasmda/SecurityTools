@@ -15,23 +15,30 @@
 <div class="row">
   <div class="col-sm-12 col-md-4 col-lg-4">
     <div class="card">
-      <div class="card-body">
-        <h4 class="card-title">Assets' General Status</h4>
+      <div class="card-block">
         <table class="table table-striped table-hover">
           <thead class="bg-primary text-white">
             <tr>
-              <th>Status</th>
+              <th>Remediation Status</th>
               <th>Amount</th>
             </tr>
           </thead>
           <tbody>
+            <?php $total=0; ?>
             @foreach($data['byStatus'] as $status)
             <tr>
               <td>{{isset($status->status_remediation) && $status->status_remediation != "" ? $status->status_remediation : 'Unknown'}}</td>
-              <td>{{$status->amount}}</td>
+              <td>{{$t = $status->amount}}</td>
             </tr>
+            <?php $total += $t; ?>
             @endforeach
           </tbody>
+          <thead class="bg-primary text-white">
+            <tr>
+              <th>Total</th>
+              <th>{{$total}}</th>
+            </tr>
+          </thead>
         </table>
       </div>
     </div>
@@ -42,6 +49,17 @@
       <div class="card-block">
 
         <div id="vulnerabilities-locations-chart" height="300px">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-sm-12 col-md-12 col-lg-12">
+    <div class="card">
+      <div class="card-block">
+        <div id="detection_history_chart" height="300px">
         </div>
       </div>
     </div>
@@ -68,8 +86,8 @@
             <tr>
               <td>{{$key}}</td>
               <td>{{$wc = $value->where('wannacry',1)->count()}}</td>
-              <td>{{$dp = $value->where('doublepulsar',1)->count()}}</td>
-              <td>{{$vl = $value->where('vulneravel',1)->count()}}</td>
+              <td>{{$dp = $value->where('DoublePulsar',1)->count()}}</td>
+              <td>{{$vl = $value->whereIn('Vulneravel',1)->count()}}</td>
               <td>{{$total = $value->unique('ip_address')->count()  }}</td>
             </tr>
             <?php $twc+=$wc; $tdp += $dp; $tvl += $vl; $tt += $total; ?>
@@ -89,13 +107,14 @@
     </div>
   </div>
 </div>
-<div class="row">
+
+<!-- <div class="row">
   <div class="col-sm-12 col-md-6 col-lg-6">
     <div id="tree">
 
     </div>
   </div>
-</div>
+</div> -->
 @endsection
 
 @section('customJS')
@@ -105,7 +124,7 @@
 <script src="{{ asset('plugins/HighCharts/js/modules/data.js') }}"></script>
 <script src="{{ asset('plugins/bootstrap-treeview-master/bootstrap-treeview.min.js')}}" charset="utf-8"></script>
 <script src="{{asset('/js/home/index.js')}}" charset="utf-8"></script>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
   $('#tree').treeview({data: assets_control.tree});
-</script>
+</script> -->
 @endsection
